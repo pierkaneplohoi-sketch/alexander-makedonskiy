@@ -93,6 +93,7 @@
     max-width: 980px;
     text-align: center;
   }
+  .slide .slide-inner > *:not(img) { opacity: 0; }
   .slide.current .slide-inner > *:not(img) { opacity: 0; animation: revealUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
   .slide.current .slide-inner > *:not(img):nth-child(1) { animation-delay: 0.2s; }
   .slide.current .slide-inner > *:not(img):nth-child(2) { animation-delay: 0.35s; }
@@ -103,6 +104,7 @@
     from { opacity: 0; transform: translateY(26px); }
     to { opacity: 1; transform: translateY(0); }
   }
+  .slide .stats .stat { opacity: 0; }
   .slide.current .stats .stat { opacity: 0; animation: revealUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
   .slide.current .stats .stat:nth-child(1) { animation-delay: 0.55s; }
   .slide.current .stats .stat:nth-child(2) { animation-delay: 0.68s; }
@@ -458,15 +460,16 @@
       function go(i) {
         if (busy || i < 0 || i >= total || i === index) return;
         busy = true;
+        slides[index].classList.remove("current");
         index = i;
         track.style.transform = "translateX(-" + (index * 20) + "%)";
         dots.forEach(function (d, j) { d.classList.toggle("active", j === index); });
         cur.textContent = index + 1;
         prog.style.width = ((index + 1) * 20) + "%";
         setTimeout(function () {
-          slides.forEach(function (s, j) { s.classList.toggle("current", j === index); });
+          slides[index].classList.add("current");
           busy = false;
-        }, 1550);
+        }, 1650);
       }
 
       applyCurrent();
